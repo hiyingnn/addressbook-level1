@@ -165,8 +165,11 @@ public class AddressBook {
     /**
      * Enum for each user.
      */
-    private enum PersonProperty  {NAME, EMAIL, PHONE};
+    private enum PersonProperty {
+        NAME, EMAIL, PHONE
+    }
 
+    ;
 
 
     /**
@@ -615,9 +618,6 @@ public class AddressBook {
      * ====================================================================
      */
 
-    /**
-     * Shows a message to the user
-     */
     private static void showToUser(String... message) {
         for (String m : message) {
             System.out.println(LINE_PREFIX + m);
