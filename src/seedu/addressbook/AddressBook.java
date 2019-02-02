@@ -617,56 +617,11 @@ public class AddressBook {
      * method can accept a varying number of message parameters.
      * ====================================================================
      */
-    
-    /**
-     * Shows a message to the user 1 argument
-     */
-    private static void showToUser(String message1) {
-        System.out.println(LINE_PREFIX + message1);
-    }
 
-
-    /**
-     * Shows a message to the user 2 argument
-     */
-    private static void showToUser(String message1, String message2) {
-        System.out.println(LINE_PREFIX + message1);
-        System.out.println(LINE_PREFIX + message2);
-    }
-
-    /**
-     * Shows a message to the user 3 arguement
-     */
-    private static void showToUser(String message1, String message2, String message3) {
-        System.out.println(LINE_PREFIX + message1);
-        System.out.println(LINE_PREFIX + message2);
-        System.out.println(LINE_PREFIX + message3);
-    }
-
-    /**
-     * Shows a message to the user 4 arguement
-     */
-
-    private static void showToUser(String message1, String message2, String message3, String message4) {
-        System.out.println(LINE_PREFIX + message1);
-        System.out.println(LINE_PREFIX + message2);
-        System.out.println(LINE_PREFIX + message3);
-        System.out.println(LINE_PREFIX + message4);
-    }
-
-
-
-    /**
-     * Shows a message to the user 5 argument
-     */
-    private static void showToUser(String message1, String message2, String message3, String message4, String message5) {
-        System.out.println(LINE_PREFIX + message1);
-        System.out.println(LINE_PREFIX + message2);
-        System.out.println(LINE_PREFIX + message3);
-        System.out.println(LINE_PREFIX + message4);
-        System.out.println(LINE_PREFIX + message5);
-
-
+    private static void showToUser(String... message) {
+        for (String m : message) {
+            System.out.println(LINE_PREFIX + m);
+        }
     }
 
     /**
