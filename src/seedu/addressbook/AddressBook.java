@@ -15,6 +15,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
  * NOTE : =============================================================
@@ -489,7 +490,9 @@ public class AddressBook {
         final ArrayList<HashMap<PersonProperty, String>> matchedPersons = new ArrayList<>();
         for (HashMap<PersonProperty, String> person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            Set<String> wordsInNameLowerCase = wordsInName.stream().map(u -> u.toLowerCase()).collect(Collectors.toSet());
+            Collection<String> keywordsLowerCase = keywords.stream().map(u -> u.toLowerCase()).collect(Collectors.toSet());
+            if (!Collections.disjoint(wordsInNameLowerCase, keywordsLowerCase)) {
                 matchedPersons.add(person);
             }
         }
