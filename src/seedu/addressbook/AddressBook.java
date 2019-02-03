@@ -61,6 +61,7 @@ public class AddressBook {
      */
     private static final String MESSAGE_ADDED = "New person added: %1$s, Phone: %2$s, Email: %3$s";
     private static final String MESSAGE_ADDRESSBOOK_CLEARED = "Address book has been cleared!";
+    private static final String MESSAGE_ADDRESSBOOK_SORTED = "Address book has been sorted";
     private static final String MESSAGE_COMMAND_HELP = "%1$s: %2$s";
     private static final String MESSAGE_COMMAND_HELP_PARAMETERS = "\tParameters: %1$s";
     private static final String MESSAGE_COMMAND_HELP_EXAMPLE = "\tExample: %1$s";
@@ -126,6 +127,10 @@ public class AddressBook {
     private static final String COMMAND_EXIT_WORD = "exit";
     private static final String COMMAND_EXIT_DESC = "Exits the program.";
     private static final String COMMAND_EXIT_EXAMPLE = COMMAND_EXIT_WORD;
+
+    private static final String COMMAND_SORT_WORD = "sort";
+    private static final String COMMAND_SORT_DESC = "Sorts the Address Book";
+    private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_WORD;
 
     private static final String DIVIDER = "===================================================";
 
@@ -385,6 +390,8 @@ public class AddressBook {
                 return executeClearAddressBook();
             case COMMAND_HELP_WORD:
                 return getUsageInfoForAllCommands();
+            case COMMAND_SORT_WORD:
+                return executeSortAddressBook();
             case COMMAND_EXIT_WORD:
                 executeExitProgramRequest();
             default:
@@ -583,6 +590,18 @@ public class AddressBook {
         ArrayList<HashMap<PersonProperty, String>> toBeDisplayed = getAllPersonsInAddressBook();
         showToUser(toBeDisplayed);
         return getMessageForPersonsDisplayedSummary(toBeDisplayed);
+    }
+
+    /**
+     * Sorts persons in address book in alphabetical order.
+     */
+    private static String executeSortAddressBook() {
+        ArrayList<HashMap<PersonProperty, String>> toBeSorted = getAllPersonsInAddressBook();
+        ArrayList<HashMap<PersonProperty, String>> toBeDisplayed = (ArrayList<HashMap<PersonProperty, String>>) toBeSorted.stream().sorted((p1, p2) -> p1.get(PersonProperty.NAME).compareToIgnoreCase(p2.get(PersonProperty.NAME))).collect(Collectors.toList());
+        ALL_PERSONS.clear();
+        ALL_PERSONS.addAll(toBeDisplayed);
+        showToUser(toBeDisplayed);
+        return MESSAGE_ADDRESSBOOK_SORTED;
     }
 
     /**
@@ -1090,6 +1109,7 @@ public class AddressBook {
                 + getUsageInfoForFindCommand() + LS
                 + getUsageInfoForViewCommand() + LS
                 + getUsageInfoForDeleteCommand() + LS
+                + getUsageInfoForSortCommand() + LS
                 + getUsageInfoForClearCommand() + LS
                 + getUsageInfoForExitCommand() + LS
                 + getUsageInfoForHelpCommand();
@@ -1120,6 +1140,14 @@ public class AddressBook {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_DELETE_WORD, COMMAND_DELETE_DESC) + LS
                 + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_DELETE_PARAMETER) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_DELETE_EXAMPLE) + LS;
+    }
+
+    /**
+     * Returns the string for showing 'sort' command usage instruction
+     */
+    private static String getUsageInfoForSortCommand() {
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_WORD, COMMAND_SORT_DESC) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORT_EXAMPLE) + LS;
     }
 
     /**
@@ -1182,3 +1210,4 @@ public class AddressBook {
         return new ArrayList<>(Arrays.asList(toSplit.trim().split("\\s+")));
     }
 }
+
